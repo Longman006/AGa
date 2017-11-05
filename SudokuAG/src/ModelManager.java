@@ -14,6 +14,7 @@ public class ModelManager {
     private float mutationProbability;
     private int maxIteration;
 
+
     public void start(){
 
         int iteration = 0 ;
@@ -38,15 +39,21 @@ public class ModelManager {
         }
     }
 
-    ////ANTONI SZYBKO
+    // wczytanie inputu
     public Board getBoardFromFile(String fileName){
         Board board;
-
 
         List<Integer> boardRawNumberString;
         int size;
 
         board = new Board(boardRawNumberString,size);
+
+        Scanner s;
+        s = new Scanner(new File(fileName));
+        while (s.hasNext()){
+            board.add(s.next());    //ew. s.hasNextLine & s.nextLine() gdy linia po linii a nie słow po słowie
+        }
+        s.close();
 
         return board;
     }
