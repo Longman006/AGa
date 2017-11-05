@@ -1,5 +1,8 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by longman on 31.10.17.
@@ -13,7 +16,6 @@ public class ModelManager {
     private int populationSize;
     private float mutationProbability;
     private int maxIteration;
-
 
     public void start(){
 
@@ -39,23 +41,25 @@ public class ModelManager {
         }
     }
 
-    // wczytanie inputu
-    public Board getBoardFromFile(String fileName){
-        Board board;
+    /**AR
+     * read from file to integer list
+     */
+    public static List getBoardFromFile(String fileName) throws FileNotFoundException {
+        // Board board = null;
 
-        List<Integer> boardRawNumberString;
-        int size;
 
-        board = new Board(boardRawNumberString,size);
+        //List<Integer> boardRawNumberString = null;
+        //int size=0;
 
-        Scanner s;
-        s = new Scanner(new File(fileName));
-        while (s.hasNext()){
-            board.add(s.next());    //ew. s.hasNextLine & s.nextLine() gdy linia po linii a nie słow po słowie
+        //board = new Board(boardRawNumberString,size);
+
+        Scanner scanner = new Scanner(new File(fileName));
+        List<Integer> list = new ArrayList<Integer>();
+        while (scanner.hasNextInt()) {
+            list.add(scanner.nextInt());
         }
-        s.close();
 
-        return board;
+        return list;
     }
 
     //ANTONI ZROB LOSOWNIE
@@ -86,7 +90,7 @@ public class ModelManager {
         int fitness = 100000;
         int minFitness = 100;
         for (Board board1 :
-               boards ) {
+                boards ) {
             if((fitness=board1.getFitness())<minFitness){
                 minFitness = fitness;
                 board=board1;
@@ -136,7 +140,7 @@ public class ModelManager {
         int fitness =  0;
 
         for (Board board:
-             boards) {
+                boards) {
             fitness = board.getFitness();
             probability = 1.0-(fitness/fitnessSum);
             probabilities.add(probability);
